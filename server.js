@@ -1,6 +1,13 @@
+import config , { nodeEnv } from './config';
 
-import config , { nodeEnv, logStar } from './config';
+import http from 'http';
 
-console.log(config);
+const server = http.createServer((req, res) => {
+    res.write("hello world! \n");
+    setTimeout(function() {
+        res.write("I can stream!");
+        res.end();
+    }, 1000);
+});
 
-logStar(nodeEnv);
+server.listen(9090);
