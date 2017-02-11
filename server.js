@@ -5,16 +5,17 @@ import apiRouter from './api';
 
 const server = express();
 
+server.set('view engine', 'ejs');
+
 
 server.get("/", (req, resp) => {
-    resp.send('Hello express');
+    resp.render('index', {
+        // this is how to define variables to EJS
+        content: 'Hello <b>express</b> and <b>EJS</b>'
+    });
 })
 
-// server.get("public/about.html", (req, resp) => {
-//     fs.readFile('./about.html', (err, data) => {
-//         resp.send(data.toString());
-//     })
-// })
+
 
 server.use(express.static('public'));
 server.use('/api', apiRouter);
