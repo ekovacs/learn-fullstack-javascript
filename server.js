@@ -13,7 +13,7 @@ server.get("/", (req, resp) => {
         // this is how to define variables to EJS
         content: 'Hello <b>express</b> and <b>EJS</b>'
     });
-})
+});
 
 
 
@@ -23,4 +23,4 @@ server.use('/api', apiRouter);
 
 server.listen(config.port, () => {
     console.log('express is listening on port: ' + config.port);
-})
+});
