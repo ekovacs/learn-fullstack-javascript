@@ -10,5 +10,5 @@ export const logStar = function(message) {
 
 
 export default {
-    port: env.PORT || 8080
+    port: env.PORT || 9090
 };
