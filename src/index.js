@@ -2,10 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
-const color = Math.random() > 0.5 ? 'green' : 'red'
+const App = (props) => {
+    return (
+        <h2 className="text-center">
+                Hello React Component!
+                {props.headerMessage}
+        </h2>
+    );
 
-/* color: color => can be shorthanded as color, since the property name and its variable value name matches*/
+};
+
+App.propTypes = {
+    headerMessage: React.PropTypes.string
+};
+
 ReactDOM.render(
-    <h2 style={{color}}>Hello, rendered by React! Powered by JSX! -- {Math.random()}</h2>,
+    <App headerMessage="rendered by a react component!" />,
     document.getElementById("root")
 );
