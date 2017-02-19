@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from './Header';
-import Content from './Content';
+import ContestPreview from './ContestPreview';
+
+
 
 class App extends React.Component  {
 
@@ -9,6 +11,7 @@ class App extends React.Component  {
     };
     
     componentDidMount() {
+
         // called when the DOM is loaded
         // any 3rd party integrations, ajax calls, timers / listeners should be setup here
     }
@@ -20,8 +23,14 @@ class App extends React.Component  {
     render () {
         return (
             <div className="App">
-               <Header message={this.state.pageHeader} />
-               <Content />
+                <Header message={this.state.pageHeader} />
+                <div>
+                    {
+                        this.props.contests.map(contest => 
+                            <ContestPreview {...contest} />
+                    )}
+                    
+                </div>
             </div>
         );
     };
