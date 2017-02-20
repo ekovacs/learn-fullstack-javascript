@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from './Header';
 import ContestPreview from './ContestPreview';
-import data from '../testData';
+import axios from 'axios';
+
 
 class App extends React.Component  {
 
@@ -12,21 +13,20 @@ class App extends React.Component  {
     
     fetchDataFromDB(callback) {
         // 1. fetch data from the DB
+       axios.get('/api/contests').then(resp => {
+           this.setState({
+               contests: resp.data.contests
+           });
+       }).catch(console.error);
 
         // 2. pass data to the provided callback function 
-        callback(data.contests);
+        
     }
 
     componentDidMount() {
-        
-        this.fetchDataFromDB((contestsData) => {
-            this.setState({
-                contests: contestsData
-            });
-        });
-        
         // called when the DOM is loaded
         // any 3rd party integrations, ajax calls, timers / listeners should be setup here
+        this.fetchDataFromDB();
     }
 
     componentWillUnmount() {
