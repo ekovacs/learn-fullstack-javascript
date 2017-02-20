@@ -4,7 +4,7 @@ import fs from 'fs';
 import apiRouter from './api';
 import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
-
+import serverRender from './serverRender';
 
 
 const server = express();
@@ -16,12 +16,17 @@ server.use(sassMiddleware({
     dest: path.join(__dirname, 'public')
 }));
 
-import serverRender from './serverRender';
+
 server.get("/", (req, resp) => {
-    resp.render('index', {
-        // this is how to define variables to EJS
-        content: '...'
-    });
+
+    serverRender()
+        .then(content => {
+            resp.render('index', {
+                content
+            });
+        })
+        .catch(console.error);
+
 });
 
 

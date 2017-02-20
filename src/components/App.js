@@ -8,7 +8,7 @@ class App extends React.Component  {
 
     state = { 
         pageHeader: 'Naming contest',
-        contests: []
+        contests: this.props.initialContests
     };
     
     fetchDataFromDB(callback) {
