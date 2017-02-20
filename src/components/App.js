@@ -1,17 +1,30 @@
 import React from 'react';
 import Header from './Header';
 import ContestPreview from './ContestPreview';
-
-
+import data from '../testData';
 
 class App extends React.Component  {
 
     state = { 
-        pageHeader: 'Naming contest'
+        pageHeader: 'Naming contest',
+        contests: []
     };
     
-    componentDidMount() {
+    fetchDataFromDB(callback) {
+        // 1. fetch data from the DB
 
+        // 2. pass data to the provided callback function 
+        callback(data.contests);
+    }
+
+    componentDidMount() {
+        
+        this.fetchDataFromDB((contestsData) => {
+            this.setState({
+                contests: contestsData
+            });
+        });
+        
         // called when the DOM is loaded
         // any 3rd party integrations, ajax calls, timers / listeners should be setup here
     }
@@ -26,8 +39,8 @@ class App extends React.Component  {
                 <Header message={this.state.pageHeader} />
                 <div>
                     {
-                        this.props.contests.map(contest => 
-                            <ContestPreview {...contest} />
+                        this.state.contests.map(contest => 
+                            <ContestPreview key={contest.id} {...contest} />
                     )}
                     
                 </div>
