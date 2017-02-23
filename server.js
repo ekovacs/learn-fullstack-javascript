@@ -20,9 +20,10 @@ server.use(sassMiddleware({
 server.get("/", (req, resp) => {
 
     serverRender()
-        .then(content => {
+        .then(({initialMarkup, initialData}) => {
             resp.render('index', {
-                content
+                initialMarkup,
+                initialData
             });
         })
         .catch(console.error);
