@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import ContestPreview from './ContestPreview';
-import axios from 'axios';
+
 
 
 class App extends React.Component  {
@@ -13,14 +13,8 @@ class App extends React.Component  {
     
     fetchDataFromDB(callback) {
         // 1. fetch data from the DB
-       axios.get('/api/contests').then(resp => {
-           this.setState({
-               contests: resp.data.contests
-           });
-       }).catch(console.error);
-
+       
         // 2. pass data to the provided callback function 
-        
     }
 
     componentDidMount() {
