@@ -12,7 +12,7 @@ export const logStar = function(message) {
 
 
 export default {
-    port: env.PORT || 9090,
+    port: env.PORT || 9191,
     host: env.host || '0.0.0.0',
     get serverUrl() {
         return `http://${this.host}:${this.port}`;
