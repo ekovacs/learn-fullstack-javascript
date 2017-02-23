@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
 const ContestPreview = (contest) => {
-    return (
+  return (
         <div className="ContestPreview"> 
             <div className="category-name">{contest.categoryName}</div>
             <div className="contest-name">{contest.contestName}</div>
         </div>
-    );
+  );
 };
 
 
