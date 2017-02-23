@@ -11,17 +11,12 @@ class App extends React.Component  {
         contests: this.props.initialContests
     };
     
-    fetchDataFromDB(callback) {
-        // 1. fetch data from the DB
-       
-        // 2. pass data to the provided callback function 
-    }
+   
 
     componentDidMount() {
         // called when the DOM is loaded
         // any 3rd party integrations, ajax calls, timers / listeners should be setup here
-        this.fetchDataFromDB();
-    }
+       }
 
     componentWillUnmount() {
         // clean up anything that may leak: timers, listeners, etc...
