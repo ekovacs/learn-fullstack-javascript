@@ -12,19 +12,19 @@ const server = express();
 server.set('view engine', 'ejs');
 
 server.use(sassMiddleware({
-    src: path.join(__dirname, 'sass'),
-    dest: path.join(__dirname, 'public')
+  src: path.join(__dirname, 'sass'),
+  dest: path.join(__dirname, 'public')
 }));
 
 
-server.get("/", (req, resp) => {
+server.get('/', (req, resp) => {
 
-    serverRender()
+  serverRender()
         .then(({initialMarkup, initialData}) => {
-            resp.render('index', {
-                initialMarkup,
-                initialData
-            });
+          resp.render('index', {
+            initialMarkup,
+            initialData
+          });
         })
         .catch(console.error);
 
@@ -37,5 +37,5 @@ server.use('/api', apiRouter);
 
 
 server.listen(config.port, config.host, () => {
-    console.log('express is listening on port: ' + config.port);
+  console.log('express is listening on port: ' + config.port);
 });
