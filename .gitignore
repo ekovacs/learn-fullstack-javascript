@@ -38,3 +38,6 @@ jspm_packages
 bundle.js
 bundle.js.map
 style.css
+
+# IDE
+.vscode/settings.json
