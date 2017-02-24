@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from './Header';
 
 import ContestList from './ContestList';
@@ -7,7 +7,7 @@ const pushState = (obj, url) => {
   window.history.pushState(obj, '', url);
 };
 
-class App extends React.Component  {
+class App extends Component  {
 
   state = { 
     pageHeader: 'Naming contest',
@@ -45,7 +45,7 @@ class App extends React.Component  {
 }
 
 App.propTypes = {
-  initialContests: React.PropTypes.array
+  initialContests: React.PropTypes.object
 };
 
 export default App;
