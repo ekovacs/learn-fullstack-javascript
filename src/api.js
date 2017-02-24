@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const fetchContest = (contestId) => {
+const fetchContest = contestId => {
 
-}
+};
 
