@@ -35,4 +35,8 @@ class App extends React.Component  {
     
 }
 
+App.propTypes = {
+  initialContests: React.PropTypes.array
+};
+
 export default App;
