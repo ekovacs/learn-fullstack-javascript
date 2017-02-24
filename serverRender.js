@@ -18,4 +18,5 @@ const serverRender = () =>
             initialData: resp.data
           };  
         }).catch(console.error);
+        
 export default serverRender;
