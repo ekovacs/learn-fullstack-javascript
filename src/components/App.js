@@ -3,6 +3,8 @@ import Header from './Header';
 
 import ContestList from './ContestList';
 import Contest from './Contest';
+import * as api from '../api';
+
 
 const pushState = (obj, url) => {
   window.history.pushState(obj, '', url);
@@ -30,11 +32,23 @@ class App extends Component  {
   fetchContests = (contestId) => {
     pushState({currentContestId: contestId}, `/contest/${contestId}`);
 
-    let contest = this.state.contests[contestId];
-    this.setState({
-      pageHeader: contest.contestName,
-      currentContestId: contestId
-    });
+    api.fetchContest(contestId)
+    .then(contest => {
+      this.setState({
+        pageHeader: contest.contestName,
+        currentContestId: contest.id, // putting currentContestId on App state
+
+        // this improves performance: 
+        //keeping previous models on state (by spreading them)
+        // but overwriting the one that is at contest.id, using the Computed property name sytax
+        contests: {
+          ...this.state.contests,
+          [contest.id]: contest
+        }
+      });
+    })
+    .catch(console.log);
+    
   }
 
   currentContent() {
@@ -46,6 +60,8 @@ class App extends Component  {
                 contests={this.state.contests} />);
     }
   }
+
+
   render() {
     return (
             <div className="App">
