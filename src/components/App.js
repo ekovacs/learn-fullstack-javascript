@@ -17,8 +17,6 @@ class App extends Component  {
   }
 
   state = this.props.initialData;
-    
-   
 
   componentDidMount() {
         // called when the DOM is loaded
@@ -30,7 +28,7 @@ class App extends Component  {
   }
 
 
-  fetchContests = (contestId) => {
+  fetchContest = (contestId) => {
     pushState({currentContestId: contestId}, `/contest/${contestId}`);
 
     api.fetchContest(contestId)
@@ -47,8 +45,20 @@ class App extends Component  {
         }
       });
     })
-    .catch(console.log);
-    
+    .catch(console.log); 
+  }
+
+  fetchContestList = () => {
+    pushState(
+      { currentContestId: null }, 
+      '/'
+    );
+    api.fetchContestList().then(contests => {
+      this.setState({
+        currentContestId: null,
+        contests: contests
+      });
+    });
   }
 
   currentContest() {
@@ -66,14 +76,15 @@ class App extends Component  {
 
   currentContent() {
     if (this.state.currentContestId) {
-      return <Contest {... this.currentContest()} />;
+      return <Contest 
+                contestListClick={this.fetchContestList} {... this.currentContest()} 
+              />;
     } else {
       return (<ContestList 
-                    onContestClick={this.fetchContests}
+                    onContestClick={this.fetchContest}
                 contests={this.state.contests} />);
     }
   }
-
 
   render() {
     return (
