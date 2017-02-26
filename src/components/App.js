@@ -10,6 +10,10 @@ const pushState = (obj, url) => {
   window.history.pushState(obj, '', url);
 };
 
+const onPopState = handler => {
+  window.onpopstate = handler;
+};
+
 class App extends Component  {
 
   static propTypes = {
@@ -19,12 +23,18 @@ class App extends Component  {
   state = this.props.initialData;
 
   componentDidMount() {
+    onPopState((event) => {
+      this.setState({
+        currentContestId: (event.state || {}).currentContestId
+      });
+    });
         // called when the DOM is loaded
         // any 3rd party integrations, ajax calls, timers / listeners should be setup here
   }
 
   componentWillUnmount() {
         // clean up anything that may leak: timers, listeners, etc...
+    onPopState(null);
   }
 
 
