@@ -13,10 +13,10 @@ const serverRender = () =>
 
           return {
             initialMarkup: ReactDOMServer.renderToString(
-                    <App initialContests={resp.data.contests} />
+                    <App initialData={resp.data} />
                 ),
             initialData: resp.data
           };  
         }).catch(console.error);
-        
+
 export default serverRender;

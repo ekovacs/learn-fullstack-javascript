@@ -12,10 +12,11 @@ const pushState = (obj, url) => {
 
 class App extends Component  {
 
-  state = { 
-    pageHeader: 'Naming contest',
-    contests: this.props.initialContests
+  static propTypes = {
+    initialData: React.PropTypes.object.isRequired
   }
+
+  state = this.props.initialData;
     
    
 
@@ -35,7 +36,6 @@ class App extends Component  {
     api.fetchContest(contestId)
     .then(contest => {
       this.setState({
-        pageHeader: contest.contestName,
         currentContestId: contest.id, // putting currentContestId on App state
 
         // this improves performance: 
@@ -51,9 +51,22 @@ class App extends Component  {
     
   }
 
+  currentContest() {
+    return this.state.contests[this.state.currentContestId];
+  }
+
+  pageHeader() {
+    if (this.state.currentContestId) {
+      return this.currentContest().contestName;
+    } 
+
+    return 'Naming contest';
+    
+  }
+
   currentContent() {
     if (this.state.currentContestId) {
-      return <Contest {... this.state.contests[this.state.currentContestId]} />;
+      return <Contest {... this.currentContest()} />;
     } else {
       return (<ContestList 
                     onContestClick={this.fetchContests}
@@ -65,7 +78,7 @@ class App extends Component  {
   render() {
     return (
             <div className="App">
-                <Header message={this.state.pageHeader} />
+                <Header message={this.pageHeader()} />
                 {this.currentContent()}
             </div>
     );
