@@ -12,16 +12,29 @@ let mdb;
 MongoClient.connect(config.mongodbUri, (err, db) => {
   assert.equal(null, err);
 
-
-
   mdb = db;
 });
 
+
+router.get('/names/:nameIds', (req, resp) => {
+  let names = {};
+  const nameIds = req.params.nameIds.split(',').map(Number);
+  mdb.collection('names')
+    .find({ id: { $in: nameIds } })
+    .each((err, name) => {
+      assert.equal(err, null);
+      if (!name) {
+        return resp.send({ names });
+      }
+      names[name.id] = name;
+    });
+});
+
 router.get('/contests', (req, resp) => {
-  
+
   // empty objects to collect the results from the mongo query
   let contests = {};
-  
+
   mdb.collection('contests')
     .find({})
     .project({
@@ -32,18 +45,18 @@ router.get('/contests', (req, resp) => {
     .each((err, contest) => {
       assert.equal(null, err);
       if (!contest) {
-        resp.send({contests});
+        resp.send({ contests });
         return;
       }
       contests[contest.id] = contest;
     });
-  
+
 });
 
 
 router.get('/contests/:contestId', (req, resp) => {
   mdb.collection('contests')
-    .findOne({id: Number(req.params.contestId)})
+    .findOne({ id: Number(req.params.contestId) })
     .then(contest => resp.send(contest))
     .catch(console.error);
 });

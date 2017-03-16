@@ -11,3 +11,9 @@ export const fetchContestList = () => {
           .get('/api/contests')
           .then(resp => resp.data.contests);
 };
+
+export const fetchNames = nameIds => {
+  return axios
+          .get(`/api/names/${nameIds}`)
+          .then(resp => resp.data.names);
+}
