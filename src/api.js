@@ -14,6 +14,6 @@ export const fetchContestList = () => {
 
 export const fetchNames = nameIds => {
   return axios
-          .get(`/api/names/${nameIds}`)
+          .get(`/api/names/${nameIds.join(',')}`)
           .then(resp => resp.data.names);
-}
+};

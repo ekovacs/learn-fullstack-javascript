@@ -14,7 +14,7 @@ const onPopState = handler => {
   window.onpopstate = handler;
 };
 
-class App extends Component  {
+class App extends Component {
 
   static propTypes = {
     initialData: React.PropTypes.object.isRequired
@@ -28,39 +28,39 @@ class App extends Component  {
         currentContestId: (event.state || {}).currentContestId
       });
     });
-        // called when the DOM is loaded
-        // any 3rd party integrations, ajax calls, timers / listeners should be setup here
+    // called when the DOM is loaded
+    // any 3rd party integrations, ajax calls, timers / listeners should be setup here
   }
 
   componentWillUnmount() {
-        // clean up anything that may leak: timers, listeners, etc...
+    // clean up anything that may leak: timers, listeners, etc...
     onPopState(null);
   }
 
 
   fetchContest = (contestId) => {
-    pushState({currentContestId: contestId}, `/contest/${contestId}`);
+    pushState({ currentContestId: contestId }, `/contest/${contestId}`);
 
     api.fetchContest(contestId)
-    .then(contest => {
-      this.setState({
-        currentContestId: contest.id, // putting currentContestId on App state
+      .then(contest => {
+        this.setState({
+          currentContestId: contest.id, // putting currentContestId on App state
 
-        // this improves performance: 
-        //keeping previous models on state (by spreading them)
-        // but overwriting the one that is at contest.id, using the Computed property name sytax
-        contests: {
-          ...this.state.contests,
-          [contest.id]: contest
-        }
-      });
-    })
-    .catch(console.log); 
+          // this improves performance: 
+          //keeping previous models on state (by spreading them)
+          // but overwriting the one that is at contest.id, using the Computed property name sytax
+          contests: {
+            ...this.state.contests,
+            [contest.id]: contest
+          }
+        });
+      })
+      .catch(console.log);
   }
 
   fetchContestList = () => {
     pushState(
-      { currentContestId: null }, 
+      { currentContestId: null },
       '/'
     );
     api.fetchContestList().then(contests => {
@@ -71,6 +71,26 @@ class App extends Component  {
     });
   }
 
+  fetchNames = (nameIds) => {
+    if (nameIds.length === 0) 
+      return;
+
+    api.fetchNames(nameIds)
+      .then(names => {
+        this.setState({ names });
+      });
+  };
+
+  lookupName = (nameId) => {
+    if (!this.state.names || !this.state.names[nameId]) {
+      return {
+        name: '...'
+      };
+    } else {
+      return this.state.names[nameId];
+    }
+  }
+
   currentContest() {
     return this.state.contests[this.state.currentContestId];
   }
@@ -78,34 +98,36 @@ class App extends Component  {
   pageHeader() {
     if (this.state.currentContestId) {
       return this.currentContest().contestName;
-    } 
+    }
 
     return 'Naming contest';
-    
+
   }
 
   currentContent() {
     if (this.state.currentContestId) {
-      return <Contest 
-                contestListClick={this.fetchContestList} {... this.currentContest()} 
-              />;
+      return <Contest
+        contestListClick={this.fetchContestList} {... this.currentContest() }
+        fetchNames={this.fetchNames}
+        lookupName={this.lookupName}
+      />;
     } else {
-      return (<ContestList 
-                    onContestClick={this.fetchContest}
-                contests={this.state.contests} />);
+      return (<ContestList
+        onContestClick={this.fetchContest}
+        contests={this.state.contests} />);
     }
   }
 
   render() {
     return (
-            <div className="App">
-                <Header message={this.pageHeader()} />
-                {this.currentContent()}
-            </div>
+      <div className="App">
+        <Header message={this.pageHeader()} />
+        {this.currentContent()}
+      </div>
     );
   }
 
-    
+
 }
 
 App.propTypes = {
