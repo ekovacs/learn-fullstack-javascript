@@ -25,7 +25,10 @@ server.get(['/', '/contest/:contestId'], (req, resp) => {
             initialData
           });
         })
-        .catch(console.error);
+        .catch(error => {
+          console.log(error);
+          resp.status(404).send('Bad request ' + error.toString());
+        });
 
 });
 

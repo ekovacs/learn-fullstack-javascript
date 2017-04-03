@@ -44,14 +44,14 @@ class App extends Component {
     api.fetchContest(contestId)
       .then(contest => {
         this.setState({
-          currentContestId: contest.id, // putting currentContestId on App state
+          currentContestId: contest._id, // putting currentContestId on App state
 
           // this improves performance: 
           //keeping previous models on state (by spreading them)
-          // but overwriting the one that is at contest.id, using the Computed property name sytax
+          // but overwriting the one that is at contest._id, using the Computed property name sytax
           contests: {
             ...this.state.contests,
-            [contest.id]: contest
+            [contest._id]: contest
           }
         });
       })
